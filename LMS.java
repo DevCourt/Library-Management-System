@@ -7,18 +7,19 @@ public class LMS {
 
 		int option = 0;
 
-		while (option != 5) {
+		while (option != 6) {
 			// Show menu options
 			System.out.println("1. Look up a patron with their ID");
 			System.out.println("2. Add a patron");
 			System.out.println("3. Remove a patron");
 			System.out.println("4. Display all patrons");
-			System.out.println("5. Exit the program");
+			System.out.println("5. Upload data via txt file");
+			System.out.println("6. Exit the program");
 			System.out.println("Please choose a number that matches the option you want to perform: ");
 
 			option = scanner.nextInt();
-			while (option < 1 || option > 5) {
-				System.out.println("Invalid option. Please choose a number between 1 and 5.");
+			while (option < 1 || option > 6) {
+				System.out.println("Invalid option. Please choose a number between 1 and 6.");
 				option = scanner.nextInt();
 			}
 			
@@ -35,6 +36,7 @@ public class LMS {
 					System.out.println("Patron not found.");
 				}
 			}
+			
 			// Add a patron
 			else if (option == 2) {
 				System.out.println("Please create a 7 digit ID for the new patron: ");
@@ -61,6 +63,7 @@ public class LMS {
 					System.out.println("Invalid ID. Please enter a 7 digit ID.");
 				}
 			}
+
 			// Remove a patron
 			else if (option == 3) {
 				System.out.println("Please enter the ID of the patron you want to remove: ");
@@ -77,11 +80,19 @@ public class LMS {
 					patronData.getPatronInfo(patronID);
 				}
 			}
-			// Exit the program
+
+			// Upload data via txt file
 			else if (option == 5) {
+				System.out.println("Please enter the path to the txt file:");
+				String filePath = scanner.next();
+				patronData.uploadData(filePath);
+			}
+
+			// Exit the program
+			else if (option == 6) {
 				System.out.println("Exiting the program.");
 			} else {
-				System.out.println("Please choose a number between 1 and 5.");
+				System.out.println("Please choose a number between 1 and 6.");
 			}
 		}
 	scanner.close();

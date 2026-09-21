@@ -1,0 +1,3 @@
+1235547,James Smith,80.50
+1256984,Fred John, 40.61
+2156398,Sam Smith, 12.90

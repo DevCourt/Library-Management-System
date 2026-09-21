@@ -1,4 +1,6 @@
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class patronData {
 	static int[] patronIDs = {
@@ -22,19 +24,15 @@ public class patronData {
 
 	// Find a patron with their ID
 	public static void getPatronInfo(int patronID) {
-		if (patronID == 1234567) {
-			System.out.println("Patron Name: Mark Johnson");
-			System.out.println("Amount due: $10");
-		} else if (patronID == 7654321) {
-			System.out.println("Patron Name: Joey Smith");
-			System.out.println("Amount due: $50");
-		} else if (patronID == 1234568) {
-			System.out.println("Patron Name: Chris Brown");
-			System.out.println("Amount due: $150");
-		} else {
-			System.out.println("Patron not found.");
-		}
-	}
+	for (int i = 0; i < patronIDs.length; i++) {
+		if (patronIDs[i] == patronID) {
+			System.out.println("Patron ID: " + patronIDs[i]);
+			System.out.println("Patron Name: " + patronNames[i]);
+			System.out.println("Amount due: $" + patronAmountsDue[i]);
+			return;
+		} 
+	} 
+}
 
 	// Add a patron to array
 	public static void addPatron(int newPatronID, String newPatronName, double newPatronAmountDue) {
@@ -70,6 +68,12 @@ public class patronData {
 		}
 
 		int remove = -1;
+		for (int i = 0; i < patronIDs.length; i++) {
+			if (patronIDs[i] == removePatronID) {
+				remove = i;
+				break;
+			}
+		}
 		if (remove == -1) {
 			System.out.println("Patron not found.");
 			return;
@@ -94,6 +98,35 @@ public class patronData {
 	public static void displayAllPatrons() {
 		for (int patronID : patronIDs) {
 			getPatronInfo(patronID);
+		}
+	}
+
+	// Upload txt file
+	public static void uploadData(String filePath) {
+		try {
+		File file = new File(filePath);
+		Scanner fileScanner = new Scanner(file);
+
+		while (fileScanner.hasNextLine()) {
+			String line = fileScanner.nextLine();
+
+			String[] data = line.split(",");
+
+			int newPatronID = Integer.parseInt(data[0]);
+			String newPatronName = data[1];
+			double newPatronAmountDue = Double.parseDouble(data[2]);
+
+			addPatron(newPatronID, newPatronName, newPatronAmountDue);
+		}
+
+		fileScanner.close();
+
+		System.out.println("Patrons successfully uploaded.");
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found.");
+		} catch (Exception e) {
+			System.out.println("Error reading the file.");
 		}
 	}
 }
